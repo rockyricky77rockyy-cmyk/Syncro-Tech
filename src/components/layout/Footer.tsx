@@ -42,11 +42,11 @@ export const Footer: React.FC = () => {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-lg">N</span>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+                <img src="/icon.png" alt="Syncro Technologies Logo" className="w-10 h-10 object-contain" />
               </div>
               <span className="font-display font-semibold text-xl text-foreground">
-                NexaApps
+                Syncro Technologies
               </span>
             </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
@@ -122,7 +122,7 @@ export const Footer: React.FC = () => {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} NexaApps. All rights reserved.
+            © {new Date().getFullYear()} Syncro Technologies. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <Link to="/privacy" className="hover:text-foreground transition-colors">

@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
         className="min-h-screen bg-background"
       >
         <Navbar />
-        
+
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-6">
             {/* Header */}
@@ -67,8 +67,8 @@ const Contact: React.FC = () => {
                   <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                     Email Us
                   </h3>
-                  <p className="text-muted-foreground">hello@nexaapps.com</p>
-                  <p className="text-muted-foreground">support@nexaapps.com</p>
+                  <p className="text-muted-foreground">syncro@gmail.com</p>
+                  <p className="text-muted-foreground">support@syncro.online</p>
                 </div>
 
                 <div className="p-6 rounded-2xl glass">
@@ -79,8 +79,8 @@ const Contact: React.FC = () => {
                     Visit Us
                   </h3>
                   <p className="text-muted-foreground">
-                    123 Innovation Street<br />
-                    San Francisco, CA 94107
+                    Near Zachariah Hospital<br />
+                    Ongole, Andhra Pradesh-523001
                   </p>
                 </div>
 
@@ -91,8 +91,8 @@ const Contact: React.FC = () => {
                   <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                     Call Us
                   </h3>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                  <p className="text-muted-foreground text-sm">Mon-Fri 9am-6pm PST</p>
+                  <p className="text-muted-foreground">+91 7893044207</p>
+                  <p className="text-muted-foreground text-sm">Mon-Fri 9am-6pm IST</p>
                 </div>
               </motion.div>
 

@@ -21,13 +21,13 @@ const allApps = [
     gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
   },
   {
-    id: 'mindflow',
-    name: 'MindFlow',
+    id: 'donga-paatalu',
+    name: 'Donga Paatalu',
     description: 'Meditation and mindfulness app with guided sessions and sleep sounds.',
-    icon: '🧘',
+    icon: '/apklogos/DP-APP.png',
     rating: 4.8,
-    downloads: '890K',
-    category: 'Lifestyle',
+    downloads: '20',
+    category: 'Music Player',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
   },
   {
@@ -72,7 +72,7 @@ const allApps = [
   },
 ];
 
-const categories = ['All', 'Health & Fitness', 'Lifestyle', 'Productivity', 'Photography', 'Finance', 'Social'];
+const categories = ['All', 'Music Player', 'Health & Fitness', 'Productivity', 'Photography', 'Finance', 'Social'];
 
 const AppsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -99,7 +99,7 @@ const AppsPage: React.FC = () => {
         className="min-h-screen bg-background"
       >
         <Navbar />
-        
+
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-6">
             {/* Header */}
@@ -116,7 +116,7 @@ const AppsPage: React.FC = () => {
                 Explore Our <span className="gradient-text">Apps</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Discover our collection of premium applications designed to enhance 
+                Discover our collection of premium applications designed to enhance
                 your daily life with cutting-edge technology.
               </p>
             </motion.div>
@@ -148,11 +148,10 @@ const AppsPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
-                      selectedCategory === category
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-card/50 text-muted-foreground hover:text-foreground hover:bg-card/80 border border-glass-border'
-                    }`}
+                    className={`px-5 py-2.5 rounded-xl font-medium transition-all ${selectedCategory === category
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-card/50 text-muted-foreground hover:text-foreground hover:bg-card/80 border border-glass-border'
+                      }`}
                   >
                     {category}
                   </motion.button>

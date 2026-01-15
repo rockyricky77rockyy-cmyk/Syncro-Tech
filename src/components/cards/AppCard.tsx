@@ -14,6 +14,7 @@ interface AppCardProps {
   category: string;
   gradient: string;
   index: number;
+  basePath?: string;
 }
 
 export const AppCard: React.FC<AppCardProps> = ({
@@ -26,6 +27,7 @@ export const AppCard: React.FC<AppCardProps> = ({
   category,
   gradient,
   index,
+  basePath = 'app',
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -61,7 +63,7 @@ export const AppCard: React.FC<AppCardProps> = ({
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <Link to={`/app/${id}`}>
+      <Link to={`/${basePath}/${id}`}>
         <motion.div
           ref={cardRef}
           onMouseMove={handleMouseMove}
@@ -92,9 +94,13 @@ export const AppCard: React.FC<AppCardProps> = ({
               {/* App Icon */}
               <motion.div
                 style={{ transform: 'translateZ(40px)', background: gradient }}
-                className="w-16 h-16 rounded-2xl mb-4 flex items-center justify-center text-3xl shadow-lg"
+                className="w-16 h-16 rounded-2xl mb-4 flex items-center justify-center text-3xl shadow-lg overflow-hidden"
               >
-                {icon}
+                {icon.startsWith('/') || icon.startsWith('http') ? (
+                  <img src={icon} alt={name} className="w-full h-full object-cover" />
+                ) : (
+                  icon
+                )}
               </motion.div>
 
               {/* Category badge */}

@@ -45,7 +45,7 @@ const About: React.FC = () => {
         className="min-h-screen bg-background"
       >
         <Navbar />
-        
+
         <main className="pt-32 pb-20">
           {/* Hero section */}
           <section className="relative mb-24 overflow-hidden">
@@ -64,7 +64,7 @@ const About: React.FC = () => {
                   <span className="gradient-text">Mobile Innovation</span>
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  We're a team of passionate developers, designers, and dreamers 
+                  We're a team of passionate developers, designers, and dreamers
                   dedicated to creating mobile experiences that inspire and empower.
                 </p>
               </motion.div>
@@ -113,18 +113,18 @@ const About: React.FC = () => {
                   </h2>
                   <div className="space-y-4 text-muted-foreground leading-relaxed">
                     <p>
-                      NexaApps was founded in 2020 with a simple mission: to create 
+                      Syncro Technologies was founded in 2020 with a simple mission: to create
                       mobile applications that genuinely improve people's lives.
                     </p>
                     <p>
-                      What started as a small team of three developers working out of a 
-                      garage has grown into a company of 50+ talented individuals, each 
+                      What started as a small team of three developers working out of a
+                      garage has grown into a company of 50+ talented individuals, each
                       bringing their unique skills and perspectives to our work.
                     </p>
                     <p>
-                      Today, our apps are used by millions of people around the world, 
-                      and we're just getting started. We continue to push the boundaries 
-                      of what's possible in mobile technology, always with our users at 
+                      Today, our apps are used by millions of people around the world,
+                      and we're just getting started. We continue to push the boundaries
+                      of what's possible in mobile technology, always with our users at
                       the heart of everything we do.
                     </p>
                   </div>
@@ -138,11 +138,11 @@ const About: React.FC = () => {
                 >
                   <div className="aspect-square rounded-3xl glass p-8 flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-6">
-                        <span className="font-display font-bold text-primary-foreground text-4xl">N</span>
+                      <div className="w-24 h-24 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <img src="/icon.png" alt="Syncro Technologies Logo" className="w-24 h-24 object-contain" />
                       </div>
                       <p className="font-display text-2xl font-semibold text-foreground mb-2">
-                        NexaApps
+                        Syncro Technologies
                       </p>
                       <p className="text-muted-foreground">Est. 2020</p>
                     </div>
@@ -167,7 +167,7 @@ const About: React.FC = () => {
                   Our Values
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  These core principles guide everything we do at NexaApps.
+                  These core principles guide everything we do at Syncro Technologies.
                 </p>
               </motion.div>
 

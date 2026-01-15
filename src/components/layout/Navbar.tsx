@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { name: 'Home', path: '/' },
   { name: 'Apps', path: '/apps' },
+  { name: 'Web Apps', path: '/webapps' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
 ];
@@ -46,12 +47,12 @@ export const Navbar: React.FC = () => {
             <Link to="/" className="flex items-center gap-3">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center"
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
               >
-                <span className="font-display font-bold text-primary-foreground text-lg">N</span>
+                <img src="/icon.png" alt="Syncro Technologies Logo" className="w-10 h-10 object-contain" />
               </motion.div>
               <span className="font-display font-semibold text-xl text-foreground">
-                NexaApps
+                Syncro Technologies
               </span>
             </Link>
 

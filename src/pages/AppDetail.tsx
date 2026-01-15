@@ -3,12 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  ArrowLeft, 
-  Star, 
-  Download, 
-  Share2, 
-  Shield, 
+import {
+  ArrowLeft,
+  Star,
+  Download,
+  Share2,
+  Shield,
   Smartphone,
   ChevronLeft,
   ChevronRight,
@@ -35,6 +35,7 @@ const apps: Record<string, {
   size: string;
   features: string[];
   screenshots: string[];
+  apk: string;
 }> = {
   'nexa-fitness': {
     name: 'Nexa Fitness',
@@ -46,7 +47,7 @@ const apps: Record<string, {
     downloads: '1.2M',
     category: 'Health & Fitness',
     gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
-    developer: 'NexaApps Inc.',
+    developer: 'Syncro Technologies Inc.',
     version: '3.2.1',
     size: '48 MB',
     features: [
@@ -62,19 +63,20 @@ const apps: Record<string, {
       'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&h=600&fit=crop',
     ],
+    apk: 'testing.apk',
   },
-  'mindflow': {
-    name: 'MindFlow',
+  'donga-paatalu': {
+    name: 'Donga Paatalu',
     description: 'Meditation and mindfulness for inner peace.',
     longDescription: 'Find your calm with MindFlow, a comprehensive meditation and mindfulness app designed to reduce stress, improve sleep, and boost mental clarity. With thousands of guided sessions led by world-renowned teachers, ambient soundscapes, and personalized recommendations, MindFlow is your sanctuary for mental wellness.',
-    icon: '🧘',
+    icon: '/apklogos/DP-APP.png',
     rating: 4.8,
-    reviews: '89K',
-    downloads: '890K',
-    category: 'Lifestyle',
+    reviews: '150',
+    downloads: '20',
+    category: 'Music Player',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
-    developer: 'NexaApps Inc.',
-    version: '2.8.0',
+    developer: 'Syncro Technologies Inc.',
+    version: '1.8.0',
     size: '35 MB',
     features: [
       'Thousands of guided meditation sessions',
@@ -89,6 +91,7 @@ const apps: Record<string, {
       'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=300&h=600&fit=crop',
     ],
+    apk: 'DPMusicPlayer.apk',
   },
   'taskpro': {
     name: 'TaskPro',
@@ -100,7 +103,7 @@ const apps: Record<string, {
     downloads: '650K',
     category: 'Productivity',
     gradient: 'linear-gradient(135deg, #10b981 0%, #00d4ff 100%)',
-    developer: 'NexaApps Inc.',
+    developer: 'Syncro Technologies Inc.',
     version: '4.1.2',
     size: '28 MB',
     features: [
@@ -116,6 +119,7 @@ const apps: Record<string, {
       'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=600&fit=crop',
     ],
+    apk: 'testing.apk',
   },
   'photoai': {
     name: 'PhotoAI',
@@ -127,7 +131,7 @@ const apps: Record<string, {
     downloads: '2.1M',
     category: 'Photography',
     gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
-    developer: 'NexaApps Inc.',
+    developer: 'Syncro Technologies Inc.',
     version: '5.0.0',
     size: '62 MB',
     features: [
@@ -143,6 +147,7 @@ const apps: Record<string, {
       'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=300&h=600&fit=crop',
     ],
+    apk: 'testing.apk',
   },
   'financeflow': {
     name: 'FinanceFlow',
@@ -154,7 +159,7 @@ const apps: Record<string, {
     downloads: '540K',
     category: 'Finance',
     gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
-    developer: 'NexaApps Inc.',
+    developer: 'Syncro Technologies Inc.',
     version: '2.5.1',
     size: '32 MB',
     features: [
@@ -170,6 +175,7 @@ const apps: Record<string, {
       'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=600&fit=crop',
     ],
+    apk: 'testing.apk',
   },
   'socialplus': {
     name: 'SocialPlus',
@@ -181,7 +187,7 @@ const apps: Record<string, {
     downloads: '3.5M',
     category: 'Social',
     gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-    developer: 'NexaApps Inc.',
+    developer: 'Syncro Technologies Inc.',
     version: '6.2.0',
     size: '78 MB',
     features: [
@@ -197,6 +203,7 @@ const apps: Record<string, {
       'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1522098543979-ffc7f79a56c4?w=300&h=600&fit=crop',
     ],
+    apk: 'testing.apk',
   },
 };
 
@@ -204,6 +211,15 @@ const AppDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const app = apps[id || ''];
   const screenshotRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = `/apk/${app.apk}`;
+    link.download = app.apk;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -240,7 +256,7 @@ const AppDetail: React.FC = () => {
         className="min-h-screen bg-background"
       >
         <Navbar />
-        
+
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-6">
             {/* Back button */}
@@ -267,10 +283,14 @@ const AppDetail: React.FC = () => {
             >
               {/* App icon */}
               <div
-                className="w-32 h-32 rounded-3xl flex items-center justify-center text-6xl shadow-lg flex-shrink-0"
+                className="w-32 h-32 rounded-3xl flex items-center justify-center text-6xl shadow-lg flex-shrink-0 overflow-hidden"
                 style={{ background: app.gradient }}
               >
-                {app.icon}
+                {app.icon.startsWith('/') || app.icon.startsWith('http') ? (
+                  <img src={app.icon} alt={app.name} className="w-full h-full object-cover" />
+                ) : (
+                  app.icon
+                )}
               </div>
 
               {/* App info */}
@@ -284,7 +304,7 @@ const AppDetail: React.FC = () => {
                   {app.name}
                 </h1>
                 <p className="text-lg text-muted-foreground mb-4">{app.developer}</p>
-                
+
                 <div className="flex flex-wrap items-center gap-6 mb-6">
                   <div className="flex items-center gap-2">
                     <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
@@ -298,7 +318,7 @@ const AppDetail: React.FC = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <MagneticButton variant="primary">
+                  <MagneticButton variant="primary" onClick={handleDownload}>
                     <span className="flex items-center gap-2">
                       <Download size={18} />
                       Download Now

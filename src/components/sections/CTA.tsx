@@ -5,7 +5,7 @@ import { MagneticButton } from '@/components/ui/magnetic-button';
 
 export const CTA: React.FC = () => {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative pt-8 pb-24 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />

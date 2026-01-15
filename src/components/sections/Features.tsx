@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Zap, Shield, Palette, Sparkles } from 'lucide-react';
+import { Zap, Shield, Palette, Sparkles, Target, Users, Rocket, Award } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,6 +33,29 @@ const features = [
   },
 ];
 
+const values = [
+  {
+    icon: Target,
+    title: 'Mission-Driven',
+    description: 'We build apps that solve real problems and make a meaningful impact in people\'s lives.',
+  },
+  {
+    icon: Users,
+    title: 'User-First',
+    description: 'Every decision we make starts with asking: how does this benefit our users?',
+  },
+  {
+    icon: Rocket,
+    title: 'Innovation',
+    description: 'We push boundaries and embrace cutting-edge technology to deliver exceptional experiences.',
+  },
+  {
+    icon: Award,
+    title: 'Excellence',
+    description: 'We hold ourselves to the highest standards in design, development, and user experience.',
+  },
+];
+
 export const Features: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -60,7 +83,7 @@ export const Features: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-24 overflow-hidden">
+    <section ref={sectionRef} className="relative py-12 overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2" />
@@ -72,7 +95,7 @@ export const Features: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <span className="inline-block px-4 py-2 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4">
             Why Choose Us
@@ -80,33 +103,55 @@ export const Features: React.FC = () => {
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
             Built for <span className="neon-text-purple text-secondary">Excellence</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Every app we create is engineered with cutting-edge technology and designed
             with user experience at its core.
           </p>
+
+          {/* Values grid - directly below "at its core" */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {values.map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="p-8 rounded-2xl glass text-center"
+              >
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-6">
+                  <value.icon className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                  {value.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {value.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Features grid */}
-        <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8 md:mt-16">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="group p-8 rounded-2xl glass hover:neon-border transition-all duration-300"
+              whileHover={{ y: -8 }}
+              className="p-8 rounded-2xl glass text-center"
             >
               {/* Icon */}
-              <div
-                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 group-hover:shadow-lg transition-shadow`}
-              >
-                <feature.icon className="w-7 h-7 text-white" />
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-6">
+                <feature.icon className="w-7 h-7 text-primary" />
               </div>
 
               {/* Content */}
               <h3 className="font-display text-xl font-semibold text-foreground mb-3">
                 {feature.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>
