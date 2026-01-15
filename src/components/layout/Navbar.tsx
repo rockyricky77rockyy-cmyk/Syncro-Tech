@@ -77,13 +77,15 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* CTA Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden md:block px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-medium btn-glow"
-            >
-              Get Started
-            </motion.button>
+            <Link to="/apps" className="hidden md:block">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-medium btn-glow"
+              >
+                Get Started
+              </motion.button>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button

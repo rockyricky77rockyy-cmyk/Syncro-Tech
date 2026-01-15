@@ -6,84 +6,94 @@ import { Search, Filter } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AppCard } from '@/components/cards/AppCard';
+import { getAppDownloads } from '@/lib/downloadUtils';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const allWebApps = [
-  {
-    id: 'nexa-fitness-web',
-    name: 'Nexa Fitness Web',
-    description: 'AI-powered personal trainer web app with custom workout plans and real-time tracking.',
-    icon: '💪',
-    rating: 4.9,
-    downloads: '1.2M',
-    category: 'Health & Fitness',
-    gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
-  },
+  // {
+  //   id: 'nexa-fitness-web',
+  //   name: 'Nexa Fitness Web',
+  //   description: 'AI-powered personal trainer web app with custom workout plans and real-time tracking.',
+  //   icon: '💪',
+  //   rating: 4.9,
+  //   downloads: '1.2M',
+  //   category: 'Health & Fitness',
+  //   gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
+  // },
   {
     id: 'dongapatalu-web',
     name: 'Dongapatalu Web',
-    description: 'Meditation and mindfulness web app with guided sessions and sleep sounds.',
+    description: 'Stream and enjoy your favorite Telugu songs anytime, anywhere.',
     icon: '/apklogos/DP-APP.png',
     rating: 4.8,
-    downloads: '20',
+    visits: '20',
     category: 'Music Player',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
   },
   {
-    id: 'taskpro-web',
-    name: 'TaskPro Web',
-    description: 'Smart task management web app with AI prioritization and team collaboration.',
-    icon: '✅',
+    id: 'gta-vice-city-web',
+    name: 'GTA Vice City Web',
+    description: 'Experience the iconic Vice City adventure in your browser.',
+    icon: '/weblogo/gta.jpg',
     rating: 4.7,
-    downloads: '650K',
-    category: 'Productivity',
+    visits: '650K',
+    category: 'Games',
     gradient: 'linear-gradient(135deg, #10b981 0%, #00d4ff 100%)',
   },
-  {
-    id: 'photoai-web',
-    name: 'PhotoAI Web',
-    description: 'Advanced photo editor web app with AI enhancement and creative filters.',
-    icon: '📸',
-    rating: 4.9,
-    downloads: '2.1M',
-    category: 'Photography',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
-  },
-  {
-    id: 'financeflow-web',
-    name: 'FinanceFlow Web',
-    description: 'Personal finance tracker web app with smart budgeting and investment insights.',
-    icon: '💰',
-    rating: 4.6,
-    downloads: '540K',
-    category: 'Finance',
-    gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
-  },
-  {
-    id: 'socialplus-web',
-    name: 'SocialPlus Web',
-    description: 'Next-gen social networking web app with AR features and encrypted messaging.',
-    icon: '🌐',
-    rating: 4.5,
-    downloads: '3.5M',
-    category: 'Social',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-  },
+  // {
+  //   id: 'photoai-web',
+  //   name: 'PhotoAI Web',
+  //   description: 'Advanced photo editor web app with AI enhancement and creative filters.',
+  //   icon: '📸',
+  //   rating: 4.9,
+  //   downloads: '2.1M',
+  //   category: 'Photography',
+  //   gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+  // },
+  // {
+  //   id: 'financeflow-web',
+  //   name: 'FinanceFlow Web',
+  //   description: 'Personal finance tracker web app with smart budgeting and investment insights.',
+  //   icon: '💰',
+  //   rating: 4.6,
+  //   downloads: '540K',
+  //   category: 'Finance',
+  //   gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
+  // },
+  // {
+  //   id: 'socialplus-web',
+  //   name: 'SocialPlus Web',
+  //   description: 'Next-gen social networking web app with AR features and encrypted messaging.',
+  //   icon: '🌐',
+  //   rating: 4.5,
+  //   downloads: '3.5M',
+  //   category: 'Social',
+  //   gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+  // },
+
 ];
 
-const categories = ['All', 'Music Player', 'Health & Fitness', 'Productivity', 'Photography', 'Finance', 'Social'];
+const categories = ['All', 'Music Player', 'Games', 'Photography', 'Health & Fitness', 'Finance', 'Social'];
 
 const WebAppsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const headerRef = useRef<HTMLDivElement>(null);
+  const [webAppsWithCounts, setWebAppsWithCounts] = useState(allWebApps);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Update visit counts for all web apps
+    const updatedWebApps = allWebApps.map(webapp => ({
+      ...webapp,
+      visits: getAppDownloads(webapp.id, webapp.visits)
+    }));
+    setWebAppsWithCounts(updatedWebApps);
   }, []);
 
-  const filteredWebApps = allWebApps.filter((webapp) => {
+  const filteredWebApps = webAppsWithCounts.filter((webapp) => {
     const matchesSearch = webapp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       webapp.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || webapp.category === selectedCategory;

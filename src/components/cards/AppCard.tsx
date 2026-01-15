@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Star, Download } from 'lucide-react';
+import { Star, Download, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AppCardProps {
@@ -10,7 +10,8 @@ interface AppCardProps {
   description: string;
   icon: string;
   rating: number;
-  downloads: string;
+  downloads?: string;
+  visits?: string;
   category: string;
   gradient: string;
   index: number;
@@ -24,6 +25,7 @@ export const AppCard: React.FC<AppCardProps> = ({
   icon,
   rating,
   downloads,
+  visits,
   category,
   gradient,
   index,
@@ -134,8 +136,8 @@ export const AppCard: React.FC<AppCardProps> = ({
                   <span className="text-sm font-medium text-foreground">{rating}</span>
                 </div>
                 <div className="flex items-center gap-1 text-muted-foreground">
-                  <Download className="w-4 h-4" />
-                  <span className="text-sm">{downloads}</span>
+                  {visits ? <Eye className="w-4 h-4" /> : <Download className="w-4 h-4" />}
+                  <span className="text-sm">{visits || downloads}</span>
                 </div>
               </div>
             </div>

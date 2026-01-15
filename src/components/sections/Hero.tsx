@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ArrowRight, Play } from 'lucide-react';
@@ -37,10 +38,10 @@ export const Hero: React.FC = () => {
       {/* Background effects */}
       <div className="absolute inset-0 hero-gradient" />
       <div className="absolute inset-0 bg-gradient-radial from-card/20 via-transparent to-transparent" />
-      
+
       {/* Animated grid */}
       <div className="absolute inset-0 opacity-20">
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             backgroundImage: `
@@ -70,15 +71,15 @@ export const Hero: React.FC = () => {
               <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="block text-foreground">Build the</span>
                 <span className="block gradient-text">Future of</span>
-                <span className="block text-foreground">Mobile Apps</span>
+                <span className="block text-foreground text-4xl md:text-5xl lg:text-6xl">Mobile & Web Apps</span>
               </h1>
             </div>
 
-            <p 
+            <p
               ref={subtitleRef}
               className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed"
             >
-              Discover premium applications crafted with cutting-edge technology. 
+              Discover premium applications crafted with cutting-edge technology.
               Experience the next generation of mobile innovation.
             </p>
 
@@ -88,12 +89,14 @@ export const Hero: React.FC = () => {
               transition={{ delay: 1.2 }}
               className="flex flex-wrap gap-4"
             >
-              <MagneticButton variant="primary">
-                <span className="flex items-center gap-2">
-                  Explore Apps
-                  <ArrowRight size={18} />
-                </span>
-              </MagneticButton>
+              <Link to="/apps">
+                <MagneticButton variant="primary">
+                  <span className="flex items-center gap-2">
+                    Explore Apps
+                    <ArrowRight size={18} />
+                  </span>
+                </MagneticButton>
+              </Link>
 
               <MagneticButton variant="ghost">
                 <span className="flex items-center gap-2">
@@ -111,8 +114,8 @@ export const Hero: React.FC = () => {
               className="flex gap-8 pt-8 border-t border-border/50"
             >
               {[
-                { value: '50+', label: 'Apps Published' },
-                { value: '2M+', label: 'Downloads' },
+                { value: '3+', label: 'Apps Published' },
+                { value: '100+', label: 'Downloads' },
                 { value: '4.9', label: 'Avg Rating' },
               ].map((stat) => (
                 <div key={stat.label} className="space-y-1">
@@ -133,7 +136,7 @@ export const Hero: React.FC = () => {
             className="relative h-[500px] lg:h-[600px]"
           >
             <PhoneModel className="w-full h-full" />
-            
+
             {/* Glow effect behind phone */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/20 rounded-full blur-[100px] -z-10" />
             <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-secondary/20 rounded-full blur-[80px] -z-10" />

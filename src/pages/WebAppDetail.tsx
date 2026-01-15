@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -17,6 +17,7 @@ import {
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { MagneticButton } from '@/components/ui/magnetic-button';
+import { shareApp } from '@/lib/downloadUtils';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,7 +28,7 @@ const webapps: Record<string, {
   icon: string;
   rating: number;
   reviews: string;
-  downloads: string;
+  visits: string;
   category: string;
   gradient: string;
   developer: string;
@@ -38,55 +39,57 @@ const webapps: Record<string, {
   url: string;
   video?: string;
 }> = {
-  'nexa-fitness-web': {
-    name: 'Nexa Fitness Web',
-    description: 'AI-powered personal trainer with custom workout plans.',
-    longDescription: 'Transform your fitness journey with Nexa Fitness Web, the most advanced AI-powered personal training web app. Get customized workout plans tailored to your goals, real-time form correction using your camera, and track your progress with detailed analytics. Whether you\'re a beginner or an athlete, Nexa Fitness adapts to you.',
-    icon: '💪',
-    rating: 4.9,
-    reviews: '125K',
-    downloads: '1.2M',
-    category: 'Health & Fitness',
-    gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
-    developer: 'Syncro Technologies Inc.',
-    version: '3.2.1',
-    size: 'Web App',
-    features: [
-      'AI-powered workout recommendations',
-      'Real-time form correction with camera',
-      'Custom meal planning and nutrition tracking',
-      'Integration with Apple Watch and Fitbit',
-      'Offline workout support',
-      'Progress tracking with detailed analytics',
-    ],
-    screenshots: [
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&h=600&fit=crop',
-    ],
-    url: 'https://nexa-fitness-web.example.com',
-    video: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  },
+  // 'nexa-fitness-web': {
+  //   name: 'Nexa Fitness Web',
+  //   description: 'AI-powered personal trainer with custom workout plans.',
+  //   longDescription: 'Transform your fitness journey with Nexa Fitness Web, the most advanced AI-powered personal training web app. Get customized workout plans tailored to your goals, real-time form correction using your camera, and track your progress with detailed analytics. Whether you\'re a beginner or an athlete, Nexa Fitness adapts to you.',
+  //   icon: '💪',
+  //   rating: 4.9,
+  //   reviews: '125K',
+  //   downloads: '1.2M',
+  //   category: 'Health & Fitness',
+  //   gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
+  //   developer: 'Syncro Technologies Inc.',
+  //   version: '3.2.1',
+  //   size: 'Web App',
+  //   features: [
+  //     'AI-powered workout recommendations',
+  //     'Real-time form correction with camera',
+  //     'Custom meal planning and nutrition tracking',
+  //     'Integration with Apple Watch and Fitbit',
+  //     'Offline workout support',
+  //     'Progress tracking with detailed analytics',
+  //   ],
+  //   screenshots: [
+  //     'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&h=600&fit=crop',
+  //   ],
+  //   url: 'https://nexa-fitness-web.example.com',
+  //   video: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  // },
   'dongapatalu-web': {
     name: 'Dongapatalu Web',
-    description: 'Meditation and mindfulness for inner peace.',
-    longDescription: 'Find your calm with MindFlow Web, a comprehensive meditation and mindfulness web app designed to reduce stress, improve sleep, and boost mental clarity. With thousands of guided sessions led by world-renowned teachers, ambient soundscapes, and personalized recommendations, MindFlow is your sanctuary for mental wellness.',
+    description: 'Stream and enjoy your favorite Telugu songs anytime, anywhere.',
+    longDescription: 'Immerse yourself in the world of Telugu music with Donga Paatalu, your ultimate music companion. Discover a vast collection of Telugu songs across all genres - from classic melodies to the latest hits. With a beautiful, intuitive interface and powerful playback features, Donga Paatalu brings your favorite music to life. Create custom playlists, enjoy high-quality audio streaming, and never miss a beat with offline downloads.',
     icon: '/apklogos/DP-APP.png',
     rating: 4.8,
     reviews: '150',
-    downloads: '20',
+    visits: '20',
     category: 'Music Player',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
     developer: 'Syncro Technologies Inc.',
     version: '1.8.0',
     size: 'Web App',
     features: [
-      'Thousands of guided meditation sessions',
-      'Sleep stories and ambient sounds',
-      'Breathing exercises and stress relief',
-      'Daily mindfulness reminders',
-      'Progress tracking and streaks',
-      'Offline access to favorites',
+      'Extensive library of Telugu songs across all genres',
+      'High-quality audio streaming and playback',
+      'Create and manage custom playlists',
+      'Offline download support for your favorite tracks',
+      'Beautiful and intuitive user interface',
+      'Search and discover new music easily',
+      'Background playback with lock screen controls',
+      'Share your favorite songs with friends',
     ],
     screenshots: [
       'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&h=600&fit=crop',
@@ -96,118 +99,121 @@ const webapps: Record<string, {
     url: 'https://dongapaatalu.vercel.app/',
     video: '/webVideos/DongaPaatalu.mp4'
   },
-  'taskpro-web': {
-    name: 'TaskPro Web',
-    description: 'Smart task management with AI prioritization.',
-    longDescription: 'Supercharge your productivity with TaskPro Web, the intelligent task management web app that uses AI to help you prioritize what matters most. From personal to-dos to team projects, TaskPro keeps everything organized with smart reminders, calendar integration, and powerful collaboration features.',
-    icon: '✅',
+  'gta-vice-city-web': {
+    name: 'GTA Vice City Web',
+    description: 'Experience the iconic Vice City adventure in your browser.',
+    longDescription: 'Step into the neon-soaked streets of Vice City with this web-based version of the legendary open-world game. Relive Tommy Vercetti\'s rise through the criminal underworld in 1980s Miami. Explore the sprawling city, complete thrilling missions, and build your empire. Optimized for modern browsers with enhanced graphics and smooth gameplay, this web version brings the classic GTA experience to your fingertips without any downloads.',
+    icon: '/weblogo/gta.jpg',
     rating: 4.7,
-    reviews: '65K',
-    downloads: '650K',
-    category: 'Productivity',
+    reviews: '20',
+    visits: '650K',
+    category: 'Games',
     gradient: 'linear-gradient(135deg, #10b981 0%, #00d4ff 100%)',
     developer: 'Syncro Technologies Inc.',
-    version: '4.1.2',
+    version: '2.0.0',
     size: 'Web App',
     features: [
-      'AI-powered task prioritization',
-      'Team collaboration and sharing',
-      'Calendar and reminder integration',
-      'Custom labels and categories',
-      'Time tracking and reports',
-      'Cross-platform sync',
+      'Full open-world exploration of Vice City',
+      'Engaging story missions and side quests',
+      'Wide variety of vehicles to drive',
+      'Iconic 80s soundtrack and radio stations',
+      'Browser-based gameplay with no downloads',
+      'Optimized controls for keyboard and gamepad',
+      'Save progress across sessions',
+      'Enhanced graphics and performance',
     ],
     screenshots: [
       'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=600&fit=crop',
     ],
-    url: 'https://taskpro-web.example.com',
+    url: 'https://cloudinary-image-storage-project.onrender.com/',
+    video: '/webVideos/GTA_Vice_City.mp4',
   },
-  'photoai-web': {
-    name: 'PhotoAI Web',
-    description: 'Advanced photo editor with AI enhancement.',
-    longDescription: 'Unleash your creativity with PhotoAI Web, the ultimate photo editing web app powered by artificial intelligence. From one-tap enhancements to advanced editing tools, PhotoAI makes professional-quality edits accessible to everyone. Remove backgrounds, apply stunning filters, and transform your photos with just a few taps.',
-    icon: '📸',
-    rating: 4.9,
-    reviews: '210K',
-    downloads: '2.1M',
-    category: 'Photography',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
-    developer: 'Syncro Technologies Inc.',
-    version: '5.0.0',
-    size: 'Web App',
-    features: [
-      'AI-powered photo enhancement',
-      'Background removal and replacement',
-      'Professional filters and presets',
-      'Advanced retouching tools',
-      'Batch editing for multiple photos',
-      'Export in various formats',
-    ],
-    screenshots: [
-      'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=300&h=600&fit=crop',
-    ],
-    url: 'https://photoai-web.example.com',
-  },
-  'financeflow-web': {
-    name: 'FinanceFlow Web',
-    description: 'Personal finance tracker with smart insights.',
-    longDescription: 'Take control of your finances with FinanceFlow Web, your personal finance companion. Track expenses, set budgets, and get smart insights into your spending habits. With automatic categorization and investment tracking, FinanceFlow helps you make smarter financial decisions every day.',
-    icon: '💰',
-    rating: 4.6,
-    reviews: '54K',
-    downloads: '540K',
-    category: 'Finance',
-    gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
-    developer: 'Syncro Technologies Inc.',
-    version: '2.5.1',
-    size: 'Web App',
-    features: [
-      'Automatic expense categorization',
-      'Budget planning and tracking',
-      'Investment portfolio overview',
-      'Bill reminders and alerts',
-      'Financial reports and insights',
-      'Bank sync with 10,000+ institutions',
-    ],
-    screenshots: [
-      'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=600&fit=crop',
-    ],
-    url: 'https://financeflow-web.example.com',
-  },
-  'socialplus-web': {
-    name: 'SocialPlus Web',
-    description: 'Next-gen social networking with AR features.',
-    longDescription: 'Connect like never before with SocialPlus Web, the social network designed for the future. With AR filters, encrypted messaging, and innovative content sharing features, SocialPlus brings people together while keeping your privacy protected. Express yourself with immersive posts and discover communities that share your passions.',
-    icon: '🌐',
-    rating: 4.5,
-    reviews: '350K',
-    downloads: '3.5M',
-    category: 'Social',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-    developer: 'Syncro Technologies Inc.',
-    version: '6.2.0',
-    size: 'Web App',
-    features: [
-      'AR filters and effects',
-      'End-to-end encrypted messaging',
-      'Stories and reels creation',
-      'Community discovery and groups',
-      'Live streaming with effects',
-      'Cross-platform sharing',
-    ],
-    screenshots: [
-      'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=300&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1522098543979-ffc7f79a56c4?w=300&h=600&fit=crop',
-    ],
-    url: 'https://socialplus-web.example.com',
-  },
+  // 'photoai-web': {
+  //   name: 'PhotoAI Web',
+  //   description: 'Advanced photo editor with AI enhancement.',
+  //   longDescription: 'Unleash your creativity with PhotoAI Web, the ultimate photo editing web app powered by artificial intelligence. From one-tap enhancements to advanced editing tools, PhotoAI makes professional-quality edits accessible to everyone. Remove backgrounds, apply stunning filters, and transform your photos with just a few taps.',
+  //   icon: '📸',
+  //   rating: 4.9,
+  //   reviews: '210K',
+  //   visits: '2.1M',
+  //   category: 'Photography',
+  //   gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+  //   developer: 'Syncro Technologies Inc.',
+  //   version: '5.0.0',
+  //   size: 'Web App',
+  //   features: [
+  //     'AI-powered photo enhancement',
+  //     'Background removal and replacement',
+  //     'Professional filters and presets',
+  //     'Advanced retouching tools',
+  //     'Batch editing for multiple photos',
+  //     'Export in various formats',
+  //   ],
+  //   screenshots: [
+  //     'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=300&h=600&fit=crop',
+  //   ],
+  //   url: 'https://photoai-web.example.com',
+  // },
+  // 'financeflow-web': {
+  //   name: 'FinanceFlow Web',
+  //   description: 'Personal finance tracker with smart insights.',
+  //   longDescription: 'Take control of your finances with FinanceFlow Web, your personal finance companion. Track expenses, set budgets, and get smart insights into your spending habits. With automatic categorization and investment tracking, FinanceFlow helps you make smarter financial decisions every day.',
+  //   icon: '💰',
+  //   rating: 4.6,
+  //   reviews: '54K',
+  //   visits: '540K',
+  //   category: 'Finance',
+  //   gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
+  //   developer: 'Syncro Technologies Inc.',
+  //   version: '2.5.1',
+  //   size: 'Web App',
+  //   features: [
+  //     'Automatic expense categorization',
+  //     'Budget planning and tracking',
+  //     'Investment portfolio overview',
+  //     'Bill reminders and alerts',
+  //     'Financial reports and insights',
+  //     'Bank sync with 10,000+ institutions',
+  //   ],
+  //   screenshots: [
+  //     'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=600&fit=crop',
+  //   ],
+  //   url: 'https://financeflow-web.example.com',
+  // },
+  // 'socialplus-web': {
+  //   name: 'SocialPlus Web',
+  //   description: 'Next-gen social networking with AR features.',
+  //   longDescription: 'Connect like never before with SocialPlus Web, the social network designed for the future. With AR filters, encrypted messaging, and innovative content sharing features, SocialPlus brings people together while keeping your privacy protected. Express yourself with immersive posts and discover communities that share your passions.',
+  //   icon: '🌐',
+  //   rating: 4.5,
+  //   reviews: '350K',
+  //   downloads: '3.5M',
+  //   category: 'Social',
+  //   gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+  //   developer: 'Syncro Technologies Inc.',
+  //   version: '6.2.0',
+  //   size: 'Web App',
+  //   features: [
+  //     'AR filters and effects',
+  //     'End-to-end encrypted messaging',
+  //     'Stories and reels creation',
+  //     'Community discovery and groups',
+  //     'Live streaming with effects',
+  //     'Cross-platform sharing',
+  //   ],
+  //   screenshots: [
+  //     'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=300&h=600&fit=crop',
+  //     'https://images.unsplash.com/photo-1522098543979-ffc7f79a56c4?w=300&h=600&fit=crop',
+  //   ],
+  //   url: 'https://socialplus-web.example.com',
+  // },
 };
 
 const WebAppDetail: React.FC = () => {
@@ -230,6 +236,10 @@ const WebAppDetail: React.FC = () => {
 
   const handleOpenLink = () => {
     window.open(webapp.url, '_blank');
+  };
+
+  const handleShare = async () => {
+    await shareApp(webapp.name, webapp.description, webapp.url);
   };
 
   if (!webapp) {
@@ -401,59 +411,6 @@ const WebAppDetail: React.FC = () => {
               </motion.div>
             </motion.div>
 
-            {/* Screenshots */}
-            <motion.section
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mb-12"
-            >
-              <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
-                Screenshots
-              </h2>
-              <div className="relative">
-                <button
-                  onClick={() => scrollScreenshots('left')}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full glass flex items-center justify-center text-foreground hover:bg-card/80 transition-colors"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={() => scrollScreenshots('right')}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full glass flex items-center justify-center text-foreground hover:bg-card/80 transition-colors"
-                >
-                  <ChevronRight size={20} />
-                </button>
-                <div
-                  ref={screenshotRef}
-                  className="flex gap-4 overflow-x-auto scrollbar-hide py-4 px-2"
-                >
-                  {webapp.screenshots.map((src, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
-                      className="flex-shrink-0 w-64 h-[480px] rounded-2xl overflow-hidden glass"
-                    >
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3 + index * 0.1 }}
-                        className="flex-shrink-0 w-64 h-[480px] rounded-2xl overflow-hidden glass"
-                      >
-                        <img
-                          src={src}
-                          alt={`${webapp.name} screenshot ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.section>
 
             {/* Description & Features */}
             <div className="grid lg:grid-cols-3 gap-8">

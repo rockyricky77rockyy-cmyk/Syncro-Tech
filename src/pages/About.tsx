@@ -4,10 +4,11 @@ import { Users, Target, Rocket, Award } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { CTA } from '@/components/sections/CTA';
+import { p } from 'node_modules/framer-motion/dist/types.d-DagZKalS';
 
 const stats = [
-  { value: '50+', label: 'Apps Published' },
-  { value: '2M+', label: 'Happy Users' },
+  { value: '3+', label: 'Apps Published' },
+  { value: '100+', label: 'Happy Users' },
   { value: '15+', label: 'Countries' },
   { value: '4.8', label: 'Avg Rating' },
 ];
@@ -113,7 +114,7 @@ const About: React.FC = () => {
                   </h2>
                   <div className="space-y-4 text-muted-foreground leading-relaxed">
                     <p>
-                      Syncro Technologies was founded in 2020 with a simple mission: to create
+                      Syncro Technologies was founded in 2026 with a simple mission: to create
                       mobile applications that genuinely improve people's lives.
                     </p>
                     <p>
@@ -144,7 +145,7 @@ const About: React.FC = () => {
                       <p className="font-display text-2xl font-semibold text-foreground mb-2">
                         Syncro Technologies
                       </p>
-                      <p className="text-muted-foreground">Est. 2020</p>
+                      <p className="text-muted-foreground">Est. 2026</p>
                     </div>
                   </div>
                   <div className="absolute -top-4 -right-4 w-32 h-32 bg-primary/20 rounded-full blur-[60px]" />

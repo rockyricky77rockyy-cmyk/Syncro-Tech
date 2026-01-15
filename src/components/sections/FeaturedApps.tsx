@@ -1,81 +1,77 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AppCard } from '@/components/cards/AppCard';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getAppDownloads } from '@/lib/downloadUtils';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const apps = [
   {
-    id: 'nexa-fitness',
-    name: 'Nexa Fitness',
-    description: 'AI-powered personal trainer with custom workout plans and real-time tracking.',
-    icon: '💪',
+    id: 'youmusics',
+    name: 'Youmusics (Beta)',
+    description: 'Stream unlimited music with high-quality audio and smart playlists.',
+    icon: '/apklogos/Youmusics.png',
     rating: 4.9,
-    downloads: '1.2M',
-    category: 'Health & Fitness',
+    downloads: '20',
+    category: 'Music Player',
     gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
   },
   {
-    id: 'mindflow',
-    name: 'MindFlow',
-    description: 'Meditation and mindfulness app with guided sessions and sleep sounds.',
-    icon: '🧘',
+    id: 'donga-paatalu',
+    name: 'Donga Paatalu',
+    description: 'Stream and enjoy your favorite Telugu songs anytime, anywhere.',
+    icon: '/apklogos/DP-APP.png',
     rating: 4.8,
-    downloads: '890K',
-    category: 'Lifestyle',
+    downloads: '20',
+    category: 'Music Player',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
   },
   {
-    id: 'taskpro',
-    name: 'TaskPro',
-    description: 'Smart task management with AI prioritization and team collaboration.',
-    icon: '✅',
+    id: 'gta-vice-city-web',
+    name: 'GTA Vice City Web',
+    description: 'Experience the iconic Vice City adventure in your browser.',
+    icon: '/weblogo/gta.jpg',
     rating: 4.7,
-    downloads: '650K',
-    category: 'Productivity',
+    visits: '650K',
+    category: 'Games',
     gradient: 'linear-gradient(135deg, #10b981 0%, #00d4ff 100%)',
+    basePath: 'webapp',
   },
   {
-    id: 'photoai',
-    name: 'PhotoAI',
-    description: 'Advanced photo editor with AI enhancement and creative filters.',
-    icon: '📸',
-    rating: 4.9,
-    downloads: '2.1M',
-    category: 'Photography',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+    id: 'dongapatalu-web',
+    name: 'Dongapatalu Web',
+    description: 'Stream and enjoy your favorite Telugu songs anytime, anywhere.',
+    icon: '/apklogos/DP-APP.png',
+    rating: 4.8,
+    visits: '20',
+    category: 'Music Player',
+    gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
+    basePath: 'webapp',
   },
-  {
-    id: 'financeflow',
-    name: 'FinanceFlow',
-    description: 'Personal finance tracker with smart budgeting and investment insights.',
-    icon: '💰',
-    rating: 4.6,
-    downloads: '540K',
-    category: 'Finance',
-    gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
-  },
-  {
-    id: 'socialplus',
-    name: 'SocialPlus',
-    description: 'Next-gen social networking with AR features and encrypted messaging.',
-    icon: '🌐',
-    rating: 4.5,
-    downloads: '3.5M',
-    category: 'Social',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-  },
+
 ];
 
 export const FeaturedApps: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const [appsWithCounts, setAppsWithCounts] = useState<any[]>(apps);
 
   useEffect(() => {
+    // Update download/visit counts for all apps
+    const updatedApps = apps.map(app => {
+      if (app.visits) {
+        return { ...app, visits: getAppDownloads(app.id, app.visits) };
+      } else if (app.downloads) {
+        return { ...app, downloads: getAppDownloads(app.id, app.downloads) };
+      }
+      return app;
+    });
+    setAppsWithCounts(updatedApps);
+
     const ctx = gsap.context(() => {
       gsap.from(titleRef.current?.children || [], {
         y: 50,
@@ -121,8 +117,8 @@ export const FeaturedApps: React.FC = () => {
 
         {/* App grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {apps.map((app, index) => (
-            <AppCard key={app.id} {...app} index={index} />
+          {appsWithCounts.map((app, index) => (
+            <AppCard key={app.id} {...app} index={index} basePath={app.basePath} />
           ))}
         </div>
 

@@ -6,9 +6,9 @@ import { Github, Twitter, Linkedin, Instagram } from 'lucide-react';
 const footerLinks = {
   products: [
     { name: 'All Apps', href: '/apps' },
-    { name: 'Nexa Fitness', href: '/app/nexa-fitness' },
-    { name: 'MindFlow', href: '/app/mindflow' },
-    { name: 'TaskPro', href: '/app/taskpro' },
+    { name: 'Youmusics', href: '/app/youmusics' },
+    { name: 'Dongapatalu', href: '/app/dongapatalu' },
+    { name: 'GTA Vice City Web', href: '/app/gta-vice-city-web' },
   ],
   company: [
     { name: 'About', href: '/about' },
@@ -26,9 +26,9 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Github, href: '#', label: 'GitHub' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
+  { icon: Github, href: 'https://github.com/varunbusi', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/uma-varun-busi-55091a30a?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BNvM2ADOKT0KGR%2F7G530tiQ%3D%3D', label: 'LinkedIn' },
+  { icon: Instagram, href: 'https://www.instagram.com/varun__busi/', label: 'Instagram' },
 ];
 
 export const Footer: React.FC = () => {

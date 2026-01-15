@@ -6,84 +6,93 @@ import { Search, Filter } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AppCard } from '@/components/cards/AppCard';
+import { getAppDownloads } from '@/lib/downloadUtils';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const allApps = [
   {
-    id: 'nexa-fitness',
-    name: 'Nexa Fitness',
-    description: 'AI-powered personal trainer with custom workout plans and real-time tracking.',
-    icon: '💪',
+    id: 'youmusics',
+    name: 'Youmusics (Beta)',
+    description: 'Stream unlimited music with high-quality audio and smart playlists.',
+    icon: '/apklogos/Youmusics.png',
     rating: 4.9,
-    downloads: '1.2M',
-    category: 'Health & Fitness',
+    downloads: '20',
+    category: 'Music Player',
     gradient: 'linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%)',
   },
   {
     id: 'donga-paatalu',
     name: 'Donga Paatalu',
-    description: 'Meditation and mindfulness app with guided sessions and sleep sounds.',
+    description: 'Stream and enjoy your favorite Telugu songs anytime, anywhere.',
     icon: '/apklogos/DP-APP.png',
     rating: 4.8,
     downloads: '20',
     category: 'Music Player',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
   },
-  {
-    id: 'taskpro',
-    name: 'TaskPro',
-    description: 'Smart task management with AI prioritization and team collaboration.',
-    icon: '✅',
-    rating: 4.7,
-    downloads: '650K',
-    category: 'Productivity',
-    gradient: 'linear-gradient(135deg, #10b981 0%, #00d4ff 100%)',
-  },
-  {
-    id: 'photoai',
-    name: 'PhotoAI',
-    description: 'Advanced photo editor with AI enhancement and creative filters.',
-    icon: '📸',
-    rating: 4.9,
-    downloads: '2.1M',
-    category: 'Photography',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
-  },
-  {
-    id: 'financeflow',
-    name: 'FinanceFlow',
-    description: 'Personal finance tracker with smart budgeting and investment insights.',
-    icon: '💰',
-    rating: 4.6,
-    downloads: '540K',
-    category: 'Finance',
-    gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
-  },
-  {
-    id: 'socialplus',
-    name: 'SocialPlus',
-    description: 'Next-gen social networking with AR features and encrypted messaging.',
-    icon: '🌐',
-    rating: 4.5,
-    downloads: '3.5M',
-    category: 'Social',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-  },
+  // {
+  //   id: 'taskpro',
+  //   name: 'TaskPro',
+  //   description: 'Smart task management with AI prioritization and team collaboration.',
+  //   icon: '✅',
+  //   rating: 4.7,
+  //   downloads: '650K',
+  //   category: 'Productivity',
+  //   gradient: 'linear-gradient(135deg, #10b981 0%, #00d4ff 100%)',
+  // },
+  // {
+  //   id: 'photoai',
+  //   name: 'PhotoAI',
+  //   description: 'Advanced photo editor with AI enhancement and creative filters.',
+  //   icon: '📸',
+  //   rating: 4.9,
+  //   downloads: '2.1M',
+  //   category: 'Photography',
+  //   gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+  // },
+  // {
+  //   id: 'financeflow',
+  //   name: 'FinanceFlow',
+  //   description: 'Personal finance tracker with smart budgeting and investment insights.',
+  //   icon: '💰',
+  //   rating: 4.6,
+  //   downloads: '540K',
+  //   category: 'Finance',
+  //   gradient: 'linear-gradient(135deg, #22c55e 0%, #10b981 100%)',
+  // },
+  // {
+  //   id: 'socialplus',
+  //   name: 'SocialPlus',
+  //   description: 'Next-gen social networking with AR features and encrypted messaging.',
+  //   icon: '🌐',
+  //   rating: 4.5,
+  //   downloads: '3.5M',
+  //   category: 'Social',
+  //   gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+  // },
 ];
 
-const categories = ['All', 'Music Player', 'Health & Fitness', 'Productivity', 'Photography', 'Finance', 'Social'];
+const categories = ['All', 'Music Player', 'Games', 'Photography', 'Health & Fitness', 'Finance', 'Social'];
 
 const AppsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const headerRef = useRef<HTMLDivElement>(null);
+  const [appsWithCounts, setAppsWithCounts] = useState(allApps);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Update download counts for all apps
+    const updatedApps = allApps.map(app => ({
+      ...app,
+      downloads: getAppDownloads(app.id, app.downloads)
+    }));
+    setAppsWithCounts(updatedApps);
   }, []);
 
-  const filteredApps = allApps.filter((app) => {
+  const filteredApps = appsWithCounts.filter((app) => {
     const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       app.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || app.category === selectedCategory;

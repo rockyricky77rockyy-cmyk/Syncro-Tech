@@ -28,7 +28,7 @@ export const CTA: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-8"
           >
             <Mail className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-foreground">Join 50,000+ subscribers</span>
+            <span className="text-sm font-medium text-foreground">Join 100+ subscribers</span>
           </motion.div>
 
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
