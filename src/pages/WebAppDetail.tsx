@@ -96,7 +96,8 @@ const webapps: Record<string, {
       'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=300&h=600&fit=crop',
     ],
-    url: 'https://dongapaatalu.vercel.app/',
+    // url: 'https://dongapaatalu.vercel.app/',
+    url: 'https://dongapaatalu.syncrotech.online/',
     video: '/webVideos/DongaPaatalu.mp4'
   },
   'gta-vice-city-web': {
@@ -127,7 +128,8 @@ const webapps: Record<string, {
       'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=300&h=600&fit=crop',
       'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=600&fit=crop',
     ],
-    url: 'https://cloudinary-image-storage-project.onrender.com/',
+    // url: 'https://cloudinary-image-storage-project.onrender.com/',
+    url: 'https://gtavicecity.syncrotech.online/'
     video: '/webVideos/GTA_Vice_City.mp4',
   },
   // 'photoai-web': {
