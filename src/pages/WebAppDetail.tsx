@@ -129,7 +129,7 @@ const webapps: Record<string, {
       'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=600&fit=crop',
     ],
     // url: 'https://cloudinary-image-storage-project.onrender.com/',
-    url: 'https://gtavicecity.syncrotech.online/'
+    url: 'https://gtavicecity.syncrotech.online/',
     video: '/webVideos/GTA_Vice_City.mp4',
   },
   // 'photoai-web': {
